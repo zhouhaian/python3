@@ -3,6 +3,7 @@ import hmac
 import json
 import time
 
+
 # 七牛账号AK/SK
 AccessKey = ''
 SecretKey = ''
