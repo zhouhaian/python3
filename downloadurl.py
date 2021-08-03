@@ -2,6 +2,7 @@ import base64
 import hmac
 import time
 
+
 # 七牛账号AK/SK
 AccessKey = ''
 SecretKey = ''
