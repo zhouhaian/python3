@@ -38,8 +38,8 @@ host = "ai.qiniuapi.com"
 contentType = "application/json"
 body = {
     "data": {
-        "uri": 'https://'
         # 视频URL地址，目前支持http和https。
+        "uri": 'https://'
     },
     "params": {
         # 审核类型，必填字段，没有默认值，可选项：pulp/terror/politician。
