@@ -1,5 +1,6 @@
 import base64
 import hmac
+import json
 
 
 # 七牛账号AK/SK
@@ -15,8 +16,10 @@ def AccessToken(method, path, host, query=None, contenttype=None, body=None):
         EntryString = EntryString + '\n' + 'Content-Type: ' + contenttype
     EntryString = EntryString + '\n\n'
     if body is not None:
+        body = json.dumps(body, separators=(',', ':'))
         EntryString = EntryString + body
     # print(EntryString)
+    # print(body)
 
     # 2)计算签名
     Signature = hmac.new(SecretKey.encode('utf-8'), EntryString.encode('utf-8'), digestmod='sha1').digest()
@@ -30,9 +33,18 @@ def AccessToken(method, path, host, query=None, contenttype=None, body=None):
 
 
 method = "POST"
-path = "/move/dGVzdDpoYWxvLmpwZw==/dGVzdDp0ZXN0LmpwZw=="
-host = "rs.qbox.me"
-contentType = "application/x-www-form-urlencoded"
+path = "/v3/video/censor"
+host = "ai.qiniuapi.com"
+contentType = "application/json"
+body = {
+    "data": {
+        "uri": 'https://'
+        # 视频URL地址，目前支持http和https。
+    },
+    "params": {
+        # 审核类型，必填字段，没有默认值，可选项：pulp/terror/politician。
+        "scenes": ['pulp', 'terror', 'politician']
+    }
+}
 
-
-print(AccessToken(method, path, host, contenttype=contentType))
+print(AccessToken(method, path, host, contenttype=contentType, body=body))
