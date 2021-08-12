@@ -19,7 +19,9 @@ def base64de(data):
 # -e 表示编码，-d 表示解码
 use = "python3 %prog -d <decode> -e <encode> target"
 parser = optparse.OptionParser(use)
+# python3 ba64.py -d xxxx
 parser.add_option('-d', dest='decode', type='string', help='decode string')
+# python3 ba64.py -e xxxx
 parser.add_option('-e', dest='encode', type='string', help='encode string')
 options, args = parser.parse_args()
 # 输出结果转成dict，以便进行判断选择是编码还是解码操作
