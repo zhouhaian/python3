@@ -29,22 +29,21 @@ def AccessToken(method, path, host, query=None, contenttype=None, body=None):
     # AccessToken = Qiniu AK:Signature
     accessToken = "Qiniu " + AccessKey + ':' + encodedSignature.decode('utf-8')
 
-    return accessToken
+    return accessToken, body
 
 
-method = "POST"
-path = "/v3/video/censor"
-host = "ai.qiniuapi.com"
-contentType = "application/json"
-body = {
-    "data": {
-        # 视频URL地址，目前支持http和https。
-        "uri": 'https://'
-    },
-    "params": {
-        # 审核类型，必填字段，没有默认值，可选项：pulp/terror/politician。
-        "scenes": ['pulp', 'terror', 'politician']
+if __name__ == '__main__':
+    # 七牛账号AK/SK
+    AccessKey = ''
+    SecretKey = ''
+    method = "POST"
+    path = "/facecompare"
+    host = "face-compare.qiniuapi.com"
+    contentType = "application/json"
+    body = {
+        "data_uri_a": "",
+        "data_uri_b": ""
     }
-}
 
-print(AccessToken(method, path, host, contenttype=contentType, body=body))
+    print(AccessToken(AccessKey, SecretKey, method, path, host, contenttype=contentType, body=body))
+
