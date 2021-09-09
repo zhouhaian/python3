@@ -16,7 +16,7 @@ def AccessToken(method, path, host, query=None, contenttype=None, body=None):
         EntryString = EntryString + '\n' + 'Content-Type: ' + contenttype
     EntryString = EntryString + '\n\n'
     if body is not None:
-        body = json.dumps(body, separators=(',', ':'))
+        body = json.dumps(body, separators=(',', ':'), ensure_ascii=False)
         EntryString = EntryString + body
     # print(EntryString)
     # print(body)
