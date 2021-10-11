@@ -2,19 +2,19 @@ import requests
 from accesstoken import AccessToken
 
 
-def videocensor(accesskey, secretkey, body):
+def VideoCensor(accessKey, secretKey, body):
     method = "POST"
     path = "/v3/video/censor"
     host = "ai.qiniuapi.com"
     contentType = "application/json"
 
     # 签算管理token以及将body从dict转成json格式
-    accesstoken, body = AccessToken(accesskey, secretkey, method, path, host, contenttype=contentType, body=body)
+    accessToken, body = AccessToken(accessKey, secretKey, method, path, host, contentType=contentType, body=body)
     
     url = "http://" + host + path
     header = {
         'Host': host,
-        'Authorization': accesstoken,
+        'Authorization': accessToken,
         'Content-Type': contentType
     }
 
@@ -25,17 +25,17 @@ def videocensor(accesskey, secretkey, body):
 
 if __name__ == '__main__':
     # 七牛账号AK/SK
-    AccessKey = ''
-    SecretKey = ''
+    accessKey = ''
+    secretKey = ''
     body = {
         "data": {
             # 视频URL地址，必传参数，目前支持http和https
-            "uri": ''
+            "uri": 'https://test.kodo.com/test.mp4'
         },
         "params": {
             # 审核类型，必传参数，没有默认值，可选项：pulp/terror/politician。
             "scenes": ['pulp', 'terror', 'politician']
         }
     }
-    
-    print(videocensor(AccessKey, SecretKey, body))
+
+    print(VideoCensor(accessKey, secretKey, body))
