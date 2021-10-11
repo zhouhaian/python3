@@ -3,47 +3,45 @@ import hmac
 import json
 
 
-# 七牛账号AK/SK
-AccessKey = ''
-SecretKey = ''
-
-
 # 生成管理token
-def AccessToken(method, path, host, query=None, contenttype=None, body=None):
+def AccessToken(accessKey, secretKey, method, path, host, contentType=None, body=None):
     # 1)构建待签名参数
+    """
+        <Method> <Path>
+        Host: <Host>
+        Content-Type: <ContentType>
+        [<Body>]
+    """
     EntryString = method + ' ' + path + '\n' + 'Host: ' + host
-    if contenttype is not None:
-        EntryString = EntryString + '\n' + 'Content-Type: ' + contenttype
+    if contentType is not None:
+        EntryString = EntryString + '\n' + 'Content-Type: ' + contentType
     EntryString = EntryString + '\n\n'
-    if body is not None:
+    # <Body> 只有在 <ContentType> 存在且不为 application/octet-stream 时才签进去。
+    if contentType is not None and contentType != "application/octet-stream":
         body = json.dumps(body, separators=(',', ':'), ensure_ascii=False)
         EntryString = EntryString + body
-    # print(EntryString)
     # print(body)
 
     # 2)计算签名
-    Signature = hmac.new(SecretKey.encode('utf-8'), EntryString.encode('utf-8'), digestmod='sha1').digest()
+    Signature = hmac.new(secretKey.encode('utf-8'), EntryString.encode('utf-8'), digestmod='sha1').digest()
     encodedSignature = base64.urlsafe_b64encode(Signature)
 
     # 3)构建管理token
     # AccessToken = Qiniu AK:Signature
-    accessToken = "Qiniu " + AccessKey + ':' + encodedSignature.decode('utf-8')
+    accessToken = "Qiniu " + accessKey + ':' + encodedSignature.decode('utf-8')
 
     return accessToken, body
 
 
 if __name__ == '__main__':
     # 七牛账号AK/SK
-    AccessKey = ''
-    SecretKey = ''
+    accessKey = ''
+    secretKey = ''
     method = "POST"
-    path = "/facecompare"
-    host = "face-compare.qiniuapi.com"
+    path = "/v1/namespaces"
+    host = "qvs.qiniuapi.com"
     contentType = "application/json"
     body = {
-        "data_uri_a": "",
-        "data_uri_b": ""
     }
 
-    print(AccessToken(AccessKey, SecretKey, method, path, host, contenttype=contentType, body=body))
-
+    print(AccessToken(accessKey, secretKey, method, path, host, contentType=contentType, body=body))
