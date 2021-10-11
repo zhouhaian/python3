@@ -10,14 +10,14 @@ def ImageCensor(accessKey, secretKey, body):
     contentType = "application/json"
 
     # 签算管理token以及将body从dict转成json格式
-    accesstoken, body = AccessToken(accessKey, secretKey, method, path, host, contentType=contentType, body=body)
-    # print(accesstoken)
+    accessToken, body = AccessToken(accessKey, secretKey, method, path, host, contentType=contentType, body=body)
+    # print(accessToken)
 
     url = "http://" + host + path
     header = {
         'Host': host,
         'Content-Type': contentType,
-        'Authorization': accesstoken
+        'Authorization': accessToken
     }
 
     res = requests.post(url, headers=header, data=body)
