@@ -23,7 +23,9 @@ def DownloadURL(accessKey, secretKey, downloadUrl, expire=3600):
     return pDownloadURL
 
 
-accessKey = ''
-secretKey = ''
-downloadUrl = 'http://kodo.qiniu.com/test.jpg'
-print(DownloadURL(accessKey, secretKey, downloadUrl))
+if __name__ == '__main__':
+    # 七牛账号AK/SK
+    accessKey = ''
+    secretKey = ''
+    downloadUrl = 'http://kodo.qiniu.com/test.jpg'
+    print(DownloadURL(accessKey, secretKey, downloadUrl))
